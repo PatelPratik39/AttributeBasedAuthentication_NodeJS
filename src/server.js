@@ -1,21 +1,20 @@
-import express from 'express';
-import { port } from './config/env.js';
+import express from "express";
+import { port } from "./config/env.js";
+import projectRoute from "./routes/projectRoutes.js";
+import errorHandler from "./middleware/errorhandler.js";
 
 const app = express();
-
 
 // MIDDLEWARE
 app.use(express.json());
 
 // ROUTES
-
+app.use("/api/project", projectRoute);
 
 // ERROR HANDLING
-
+app.use(errorHandler);
 
 // APP LISTEN
 app.listen(port, () => {
-  console.log(`Aerver is running at PORT = ${port}`);
+  console.log(`Server is running at PORT = ${port}`);
 });
-
-
