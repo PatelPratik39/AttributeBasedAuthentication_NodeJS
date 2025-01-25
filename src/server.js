@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { port } from "./config/env.js";
 import projectRoute from "./routes/projectRoutes.js";
 import errorHandler from "./middleware/errorhandler.js";
@@ -6,6 +7,7 @@ import errorHandler from "./middleware/errorhandler.js";
 const app = express();
 
 // MIDDLEWARE
+app.use(cors());
 app.use(express.json());
 
 // ROUTES

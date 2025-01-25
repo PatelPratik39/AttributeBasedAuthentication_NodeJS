@@ -1,4 +1,3 @@
-// import { verify } from "jsonwebtoken";
 import express from "express";
 import { verifyToken } from "../middleware/authentication.js";
 import { updateProject, viewProject } from "../controller/projectController.js";

@@ -3,29 +3,36 @@ import { jwtSecret } from "../config/env.js";
 
 export const verifyToken = (req, res, next) => {
   let token;
-  let headers = req.headers.Authorization || req.headers.authorization;
+  const authHeader = req.headers.authorization || req.headers.Authorization;
 
-  if ((authHeader = req.headers.startsWith("Bearer"))) {
-    token = authHeader.split(" ")[1];
+  // Check if Authorization header exists and starts with "Bearer"
+  if (authHeader && authHeader.startsWith("Bearer")) {
+    token = authHeader.split(" ")[1]; // Extract the token after "Bearer "
 
+    // Check if token is missing
     if (!token) {
       return res.status(401).json({
         status: 401,
-        message: "No token, authorization denied "
+        message: "No token, authorization denied"
       });
     }
 
-    // decode the token
+    // Decode the token
     try {
-      const decode = jwt.verify(token, jwtSecret);
-      req.user = decode;
-      next();
+      const decoded = jwt.verify(token, jwtSecret); // Verify and decode the token
+      req.user = decoded; // Attach the decoded user to the request object
+      next(); // Call the next middleware
     } catch (error) {
-      res.status(400).json({ status: 400, message: "Token is not valid" });
+      return res.status(400).json({
+        status: 400,
+        message: "Token is not valid"
+      });
     }
   } else {
-    return res
-      .status(401)
-      .json({ status: 401, message: "No token, authorization denied " });
+    // If no Authorization header is found
+    return res.status(401).json({
+      status: 401,
+      message: "No token, authorization denied"
+    });
   }
 };
