@@ -8,7 +8,6 @@ export const verifyToken = (req, res, next) => {
   // Check if Authorization header exists and starts with "Bearer"
   if (authHeader && authHeader.startsWith("Bearer")) {
     token = authHeader.split(" ")[1]; // Extract the token after "Bearer "
-
     // Check if token is missing
     if (!token) {
       return res.status(401).json({
