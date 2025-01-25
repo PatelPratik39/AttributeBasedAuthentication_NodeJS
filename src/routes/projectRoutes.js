@@ -1,7 +1,9 @@
-import { verify } from "jsonwebtoken";
+// import { verify } from "jsonwebtoken";
 import express from "express";
+import { verifyToken } from "../middleware/authentication.js";
+import { updateProject, viewProject } from "../controller/projectController.js";
 
-const router = express.router();
+const router = express.Router();
 
 // Route to view a project
 router.get("/:id", verifyToken, viewProject);
